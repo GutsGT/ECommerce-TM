@@ -7,7 +7,15 @@
                 @foreach($products as $product)
                     <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
                         <a class="block relative h-48 rounded overflow-hidden">
-                            <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="{{ $product->cover }}">
+                            @if($product->cover)
+                                @if(str_contains($product->cover, "via.placeholder"))
+                                    <img alt="Sem logo" class="object-cover object-center w-full h-full block" src="{{ $product->cover }}">
+                                @else
+                                    <img alt="Sem logo" class="object-cover object-center w-full h-full block" src="{{ Storage::disk('public')->url($product->cover) }}">
+                                @endif
+                            @else
+                                <p>Sem logo</p>
+                            @endif
                         </a>
                         <div class="mt-4">
                             <h2 class="text-gray-900 title-font text-lg font-medium">{{ $product->name }}</h2>

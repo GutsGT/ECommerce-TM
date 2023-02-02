@@ -30,7 +30,11 @@
                                 <td class="px-4 py-3">{{ $product->id }}</td>
                                 <td class="px-4 py-3">
                                     @if($product->cover)
-                                        <img alt="Sem logo" class="object-cover object-center w-full h-full block" src="{{ Storage::disk('public')->url($product->cover) }}">
+                                        @if(str_contains($product->cover, "via.placeholder"))
+                                            <img alt="Sem logo" class="object-cover object-center w-full h-full block" src="{{ $product->cover }}">
+                                        @else
+                                            <img alt="Sem logo" class="object-cover object-center w-full h-full block" src="{{ Storage::disk('public')->url($product->cover) }}">
+                                        @endif
                                     @endif
                                 </td>
                                 <td class="px-4 py-3">{{ $product->name }}</td>
@@ -38,7 +42,11 @@
                                 <td class="px-4 py-3">{{ $product->stock }}</td>
                                 <td class="px-4 py-3 text-sm text-right space-x-3 text-gray-900">
                                     <a href="{{ route('admin.product.edit', $product->id) }}" class="mt-3 text-indigo-500 inline-flex items-center">Editar</a>
-                                    <a class="mt-3 text-indigo-500 inline-flex items-center">Deletar</a>
+                                    <form method="post" action="{{ route('admin.product.destroy', $product->id) }}">
+                                        @method('delete')
+                                        @csrf
+                                        <button type="submit" class="mt-3 text-indigo-500 inline-flex items-center">Deletar</button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
