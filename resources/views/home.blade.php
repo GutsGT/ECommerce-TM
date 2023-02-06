@@ -22,7 +22,7 @@
             <div class="flex flex-wrap -m-4">
                 @foreach($products as $product)
                     <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
-                        <a class="block relative h-48 rounded overflow-hidden">
+                        <a href="{{ route('product', $product->slug) }}" class="block relative h-48 rounded overflow-hidden">
                             @if($product->cover)
                                 @if(str_contains($product->cover, "via.placeholder"))
                                     <img alt="Sem logo" class="object-cover object-center w-full h-full block" src="{{ $product->cover }}">
